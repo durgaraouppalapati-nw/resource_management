@@ -1,0 +1,3 @@
+class InvalidPostId(Exception):
+    pass
+

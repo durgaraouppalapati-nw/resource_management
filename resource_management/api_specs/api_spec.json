@@ -1,0 +1,1632 @@
+{
+    "swagger": "2.0",
+    "host": "127.0.0.1:8080",
+    "basePath": "/api/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Resource Management",
+        "description": "Management of Resources app to manage resources"
+    },
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read",
+                "write": "write"
+            },
+            "type": "oauth2"
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "profile_pic": {
+                    "type": "string"
+                },
+                "job_role": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string",
+                    "enum": [
+                        "MALE", "FEMALE", "OTHER"
+                    ]
+                }
+            }
+        },
+        "UserCredentials": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "username",
+                "password"
+            ]
+        },
+        "Resource": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "resource_pic": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "link",
+                "description"
+            ]
+        },
+        "ResourceDetails": {
+            "allOf": [{
+                    "$ref": "#/definitions/Resource"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "resource_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "required": [
+                        "resource_id"
+                    ]
+                }
+            ]
+        },
+        "Item": {
+            "type": "object",
+            "properties": {
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "title",
+                "link",
+                "description",
+                "item_id"
+            ]
+        },
+        "UserWithAccessLevel": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "job_role": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "access_level": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "job_role",
+                "department",
+                "access_level"
+            ]
+        },
+        "ListofUsers": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "job_role": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "name",
+                "job_role",
+                "department",
+                "user_id"
+            ]
+        },
+        "UserDetails": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "job_role": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "profile_pic": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "job_role",
+                "department",
+                "user_id"
+            ]
+        },
+        "ResourceItemForUser": {
+            "type": "object",
+            "properties": {
+                "resource_name": {
+                    "type": "string"
+                },
+                "item_title": {
+                    "type": "string"
+                },
+                "access_level": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "resource_name",
+                "item_title",
+                "access_level",
+                "link",
+                "description",
+                "item_id"
+            ]
+        },
+        "ResourceItem": {
+            "type": "object",
+            "properties": {
+                "resource_name": {
+                    "type": "string"
+                },
+                "item_title": {
+                    "type": "string"
+                },
+                "access_level": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "resource_name",
+                "item_title",
+                "access_level",
+                "link",
+                "item_id"
+            ]
+        },
+        "Request": {
+            "type": "object",
+            "properties": {
+                "request_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "resource_name": {
+                    "type": "string"
+                },
+                "item_title": {
+                    "type": "string"
+                },
+                "access_level": {
+                    "type": "string"
+                },
+                "due_datetime": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "request_id",
+                "resource_name",
+                "item_title",
+                "access_level",
+                "due_datetime"
+            ]
+        },
+        "RequestAndUserDetails": {
+            "allOf": [{
+                    "$ref": "#/definitions/Request"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "user_name": {
+                            "type": "string"
+                        },
+                        "profile_pic": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "user_name"
+                    ]
+                }
+            ]
+        },
+        "AddItemToUser": {
+            "type": "object",
+            "properties": {
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "access_level": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "item_id",
+                "access_level"
+            ]
+        },
+        "UserRequests": {
+            "type": "object",
+            "properties": {
+                "request_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "resource_name": {
+                    "type": "string"
+                },
+                "item_title": {
+                    "type": "string"
+                },
+                "access_level": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "request_id",
+                "resource_name",
+                "item_title",
+                "access_level",
+                "status"
+            ]
+        },
+        "ResourceMininalDetails": {
+            "type": "object",
+            "properties": {
+                "resource_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "resource_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "resource_id",
+                "resource_name"
+            ]
+        },
+        "ItemMinimalDetails": {
+            "type": "object",
+            "properties": {
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "item_title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "item_id",
+                "item_title"
+            ]
+        }
+    },
+    "parameters": {
+        "CreateUserRequest": {
+            "name": "user",
+            "in": "body",
+            "description": "create user",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "confirm_password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password",
+                    "confirm_password"
+                ]
+            }
+        },
+        "UpdateProfileRequest": {
+            "name": "update_user_details",
+            "in": "body",
+            "description": "update user details",
+            "schema": {
+                "$ref": "#/definitions/User"
+            }
+        },
+        "UserLoginRequest": {
+            "name": "user",
+            "in": "body",
+            "description": "user login",
+            "schema": {
+                "$ref": "#/definitions/UserCredentials"
+            }
+        },
+        "UpdatePasswordRequest": {
+            "name": "password",
+            "in": "body",
+            "description": "update password",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "old_password": {
+                        "type": "string"
+                    },
+                    "new_password": {
+                        "type": "string"
+                    },
+                    "confirm_password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "old_password",
+                    "new_password",
+                    "confirm_password"
+                ]
+            }
+        },
+        "AddResourceRequest": {
+            "name": "resource",
+            "in": "body",
+            "schema": {
+                "$ref": "#/definitions/Resource"
+            }
+        },
+        "UpdateResourceRequest": {
+            "name": "update_resource",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "resource_pic": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "UpdateItemRequest": {
+            "name": "update_resource_item",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "CreateItemRequest": {
+            "name": "create_resource_item",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "title",
+                    "link",
+                    "description"
+                ]
+            }
+        },
+        "ListOfItemIdsRequest": {
+            "name": "list_of_item_ids",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "item_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                },
+                "required": [
+                    "item_ids"
+                ]
+            }
+        },
+        "RequestsAction": {
+            "name": "list_of_request_ids",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string",
+                        "enum": ["ACCEPTED", "REJECTED"]
+                    },
+                    "request_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "reason_for_rejection": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "request_ids",
+                    "action"
+                ]
+            }
+        },
+        "ResourceIdRequest": {
+            "name": "resource_id",
+            "in": "path",
+            "required": true,
+            "description": "id of the resource",
+            "type": "integer",
+            "format": "int64"
+        },
+        "ItemIdRequest": {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "description": "id of the item",
+            "type": "integer",
+            "format": "int64"
+        },
+        "UserIdRequest": {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "id of the user",
+            "type": "integer",
+            "format": "int64"
+        },
+        "OffsetRequest": {
+            "name": "offset",
+            "in": "query",
+            "description": "offset value",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+        },
+        "LimitRequest": {
+            "name": "limit",
+            "in": "query",
+            "description": "limit value",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+        },
+        "RequestIdRequest": {
+            "name": "request_id",
+            "in": "path",
+            "description": "request id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+        },
+        "SearchBy": {
+            "name": "search",
+            "in": "query",
+            "description": "search value",
+            "type": "string"
+        },
+        "SortByRequest": {
+            "name": "sortby",
+            "in": "query",
+            "description": "sort by value",
+            "type": "string",
+            "enum": [
+                "DUE_DATETIME", "RESOURCE", "ITEM", "NAME"
+            ]
+        },
+        "FilterByRequest": {
+            "name": "filterby",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "filterby": {
+                        "type": "string",
+                        "enum": [
+                            "NAME", "RESOURCE", "ACCESSLEVEL"
+                        ]
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "SearchRequest": {
+            "name": "search",
+            "in": "query",
+            "description": "search value",
+            "required": true,
+            "type": "string"
+        },
+        "UserRequestsSortBy": {
+            "name": "sortby",
+            "in": "query",
+            "description": "sort by value",
+            "type": "string",
+            "enum": [
+                "STATUS", "RESOURCE", "ACCESSLEVEL"
+            ]
+        },
+        "UserRequestsFilterBy": {
+            "name": "filterby",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "filterby": {
+                        "type": "string",
+                        "enum": [
+                            "STATUS", "RESOURCE", "ACCESSLEVEL"
+                        ]
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "AddItemToUserRequest": {
+            "name": "add_resource_item_to_user",
+            "in": "body",
+            "schema": {
+                "$ref": "#/definitions/AddItemToUser"
+            }
+        },
+        "CreateNewRequest": {
+            "name": "request_details",
+            "in": "body",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "resource_id": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "item_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "access_level": {
+                        "type": "string",
+                        "enum": [
+                            "READ", "WRITE", "ADMIN"
+                        ]
+                    },
+                    "due_datetime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "reason_for_access": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "resource_id",
+                    "item_id",
+                    "access_level",
+                    "due_datetime",
+                    "reason_for_access"
+                ]
+            }
+        }
+    },
+    "responses": {
+        "AccessTokenResponse": {
+            "description": "access token",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "access_token"
+                ]
+            }
+        },
+        "UserDetailsResponse": {
+            "description": "user details",
+            "schema": {
+                "$ref": "#/definitions/User"
+            }
+        },
+        "UserProfileResponse": {
+            "description": "user_profile",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "is_admin": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "is_admin"
+                ]
+            }
+        },
+        "ListOfUsersResponse": {
+            "description": "user details",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_users": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "users_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ListofUsers"
+                        }
+                    }
+                }
+            }
+        },
+        "AllResuorcesResponse": {
+            "description": "all resources",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_resources": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "resources_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ResourceDetails"
+                        }
+                    }
+                }
+            }
+        },
+        "AllItemsResponse": {
+            "description": "all items",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_items": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/Item"
+                        }
+                    }
+                }
+            }
+        },
+        "UserWithAccessLevelResponse": {
+            "description": "users for item",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_users": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/UserWithAccessLevel"
+                        }
+                    }
+                }
+            }
+        },
+        "ResourceItemResponse": {
+            "description": "items for user",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_items": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_details": {
+                        "$ref": "#/definitions/UserDetails"
+                    },
+                    "resource_items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ResourceItemForUser"
+                        }
+                    }
+                }
+            }
+        },
+        "RequestResponse": {
+            "description": "requests made by users",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_requests": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "requests_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/RequestAndUserDetails"
+                        }
+                    }
+                }
+            }
+        },
+        "AvailableResourceItemsForUser": {
+            "description": "available resource itesms for user",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_resource_items": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "resource_items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ResourceItem"
+                        }
+                    }
+                },
+                "required": [
+                    "total_resource_items",
+                    "resource_items"
+                ]
+            }
+        },
+        "UserRequestsResponse": {
+            "description": "user requests",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_requests": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "requests_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/UserRequests"
+                        }
+                    }
+                },
+                "required": [
+                    "total_requests",
+                    "requests_details"
+                ]
+            }
+        },
+        "SearchResourceResponse": {
+            "description": "resources details",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "resources_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ResourceMininalDetails"
+                        }
+                    }
+                }
+            }
+        },
+        "SearchResourceItemResponse": {
+            "description": "resource items details",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "items_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ItemMinimalDetails"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/signup/v1/": {
+            "post": {
+                "operationId": "create_user",
+                "summary": "create user",
+                "description": "create user",
+                "security": [],
+                "parameters": [{
+                    "$ref": "#/parameters/CreateUserRequest"
+                }],
+                "responses": {
+                    "201": {
+                        "$ref": "#/responses/AccessTokenResponse"
+                    },
+                    "409": {
+                        "description": "Username Already Exists"
+                    }
+                }
+            }
+        },
+        "/signin/v1/": {
+            "post": {
+                "operationId": "signin",
+                "summary": "signin",
+                "description": "signin",
+                "security": [],
+                "parameters": [{
+                    "$ref": "#/parameters/UserLoginRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AccessTokenResponse"
+                    },
+                    "401": {
+                        "description": "Invalid Credentials"
+                    }
+                }
+            }
+        },
+        "/profile/v1/": {
+            "get": {
+                "operationId": "get_user_profile",
+                "summary": "user profile",
+                "description": "User Profile Details",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserProfileResponse"
+                    }
+                }
+            }
+        },
+        "/user/details/v1/": {
+            "get": {
+                "operationId": "user_details",
+                "summary": "user details",
+                "description": "Details of the user",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserDetailsResponse"
+                    }
+                }
+            }
+        },
+        "/user/update_profile/v1/": {
+            "put": {
+                "operationId": "update_user_details",
+                "summary": "update user details",
+                "description": "update user details",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/UpdateProfileRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    }
+                }
+            }
+        },
+        "/password/v1/": {
+            "put": {
+                "operationId": "update_password",
+                "summary": "update password",
+                "description": "Password update",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/UpdatePasswordRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Update Password Successfull"
+                    },
+                    "400": {
+                        "description": "Incorrect Password"
+                    }
+                }
+            }
+        },
+        "/resources/v1/": {
+            "get": {
+                "operationId": "get_all_resource",
+                "summary": "get all resources",
+                "description": "All Resources",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AllResuorcesResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    }
+                }
+            }
+        },
+        "/resource/v1/": {
+            "post": {
+                "operationId": "create_resource",
+                "summary": "create resource",
+                "description": "Create Resource",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/AddResourceRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "403": {
+                        "description": "User Can Not Create Resource"
+                    }
+                }
+            }
+        },
+        "/resource/{resource_id}/v1/": {
+            "delete": {
+                "operationId": "delete_resource",
+                "summary": "delete resource",
+                "description": "Delete Resource",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/ResourceIdRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    },
+                    "403": {
+                        "description": "User Can Not Delete Resource"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "update_resource",
+                "summary": "update resource",
+                "description": "Update Resource",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/UpdateResourceRequest"
+
+                    },
+                    {
+                        "$ref": "#/parameters/ResourceIdRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    },
+                    "403": {
+                        "description": "User Can Not Update Resource"
+                    }
+                }
+            }
+        },
+        "/item/{item_id}/v1/": {
+            "put": {
+                "operationId": "update_resorce_item",
+                "summary": "update resource item",
+                "description": "Update Resource Item",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/UpdateItemRequest"
+
+                    },
+                    {
+                        "$ref": "#/parameters/ItemIdRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "404": {
+                        "description": "Resource Item Not Found"
+                    },
+                    "403": {
+                        "description": "User Can Not Update Resource Item"
+                    }
+                }
+            }
+        },
+        "/resource/items/v1/": {
+            "post": {
+                "operationId": "delete_resource_items",
+                "summary": "delete resource items",
+                "description": "Delete Resource Items",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/ListOfItemIdsRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "403": {
+                        "description": "User Can Not Delete Resource Items"
+                    }
+                }
+            }
+        },
+        "/resource/{resource_id}/item/v1/": {
+            "post": {
+                "operationId": "create_resorce_item",
+                "summary": "create resource item",
+                "description": "Create Resource Item",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/CreateItemRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/ResourceIdRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "403": {
+                        "description": "User Can Not Create Resource Item"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/resource/{resource_id}/items/v1/": {
+            "get": {
+                "operationId": "get_resource_items",
+                "summary": "get resource items",
+                "description": "Resource Items",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/ResourceIdRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AllItemsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/item/{item_id}/users/v1/": {
+            "get": {
+                "operationId": "get_users_for_item",
+                "summary": "get users for item",
+                "description": "User For Given Item",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/ItemIdRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserWithAccessLevelResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    },
+                    "404": {
+                        "description": "Resource Item Not Found"
+                    }
+                }
+            }
+        },
+        "/requests/v1/": {
+            "post": {
+                "operationId": "get_requests",
+                "summary": "get requests",
+                "description": "get requests",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/SortByRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/FilterByRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/RequestResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    }
+                }
+            }
+        },
+        "/requests/action/v1/": {
+            "post": {
+                "operationId": "accept_or_reject_requests",
+                "summary": "accept or reject requests",
+                "description": "accept or reject requests",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/RequestsAction"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    }
+                }
+            }
+        },
+        "/users/v1/": {
+            "get": {
+                "operationId": "get_all_users",
+                "summary": "get all users",
+                "description": "All users",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/ListOfUsersResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    }
+                }
+            }
+        },
+        "/user/{user_id}/items/v1/": {
+            "get": {
+                "operationId": "get_all_resource_items_for_user",
+                "summary": "get all items for user",
+                "description": "all resource  items for user",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/UserIdRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/ResourceItemResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    }
+                }
+            }
+        },
+        "/user/{user_id}/add_item/v1/": {
+            "post": {
+                "operationId": "add_resource_item_to_user",
+                "summary": "add a resource item to user",
+                "description": "add a resource item to user",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/UserIdRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/AddItemToUserRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    }
+                }
+            }
+        },
+        "/resource_items/v1/": {
+            "get": {
+                "operationId": "get_available_resource_items_for_user",
+                "summary": "get available resource items for user",
+                "description": "available resource items for user",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/SearchBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/AvailableResourceItemsForUser"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    }
+                }
+            }
+        },
+        "/user/requests/v1/": {
+            "post": {
+                "operationId": "user_requests",
+                "summary": "user requests",
+                "description": "user requests",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/OffsetRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/UserRequestsSortBy"
+                    },
+                    {
+                        "$ref": "#/parameters/UserRequestsFilterBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserRequestsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Limit Or Offset Value"
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    }
+                }
+            }
+        },
+        "/user/add/request/v1/": {
+            "post": {
+                "operationId": "create_request",
+                "summary": "create request",
+                "description": "create request",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/CreateNewRequest"
+                }],
+                "responses": {
+                    "201": {
+                        "description": "SUCCESS"
+                    },
+                    "404": {
+                        "description": "Resource or Resource_Item Not Found"
+                    }
+                }
+            }
+        },
+        "/request/search/resource/v1/": {
+            "get": {
+                "operationId": "search_resource",
+                "summary": "search resources",
+                "description": "search resources",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/SearchRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/SearchResourceResponse"
+                    }
+                }
+            }
+        },
+        "/request/search/{resource_id}/resource_items/v1/": {
+            "get": {
+                "operationId": "search_resource_items",
+                "summary": "search resource items",
+                "description": "search resource items",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/SearchRequest"
+                    },
+                    {
+                        "$ref": "#/parameters/ResourceIdRequest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/SearchResourceItemResponse"
+                    }
+                }
+            }
+        },
+        "/user/request/{request_id}/v1/": {
+            "delete": {
+                "operationId": "delete_request",
+                "summary": "delete request",
+                "description": "delete request",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/RequestIdRequest"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS"
+                    },
+                    "403": {
+                        "description": "Unauthorized User To Delete"
+                    },
+                    "400": {
+                        "description": "Can Not Delete Request"
+                    },
+                    "404": {
+                        "description": "Request Id Not Found"
+                    }
+                }
+            }
+        }
+    }
+}

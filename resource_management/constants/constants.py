@@ -1,0 +1,1 @@
+DEFAULT_DATE_TIME_FORMAT = '%d/%m/%Y %I:%M %p'
