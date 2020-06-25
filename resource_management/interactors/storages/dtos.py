@@ -178,3 +178,7 @@ class ItemMinimalDetailsDto:
     title: str
 
 
+@dataclass
+class ResourceWithResourceItemsDTO:
+    resource: ResourceDto
+    resource_items: List[ItemDto]
