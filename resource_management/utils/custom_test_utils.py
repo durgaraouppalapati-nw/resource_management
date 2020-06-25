@@ -12,6 +12,11 @@ class CustomTestUtils(CustomAPITestCase):
         super(CustomTestUtils, self).setupUser(
             username=username, password=password
         )
+        UserFactory.reset_sequence()
+        ResourceFactory.reset_sequence()
+        ResourceItemFactory.reset_sequence()
+        RequestFactory.reset_sequence()
+        ResourceItemAccessFactory.reset_sequence()
 
     def set_foo_user_as_admin(self, user):
         user.is_admin = True
