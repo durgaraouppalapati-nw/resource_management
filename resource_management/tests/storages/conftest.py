@@ -36,7 +36,7 @@ def users():
         {
             "username": "user1",
             "name": "User 1",
-            "profile_pic": "https://image.shutterstock.com/image-vector/male-user-account-profile-circle-600w-467503055.jpg",
+            "profile_pic": "www.user1/pic.com",
             "job_role": "Developer",
             "department": "Backend",
             "gender": "Male",
@@ -45,7 +45,7 @@ def users():
         {
             "username": "user2",
             "name": "User 2",
-            "profile_pic": "https://image.shutterstock.com/image-vector/male-user-account-profile-circle-600w-467503055.jpg",
+            "profile_pic": "www.user2/pic.com",
             "job_role": "Developer",
             "department": "Backend",
             "gender": "Male",
@@ -54,7 +54,7 @@ def users():
         {
             "username": "user3",
             "name": "User 3",
-            "profile_pic": "https://image.shutterstock.com/image-vector/male-user-account-profile-circle-600w-467503055.jpg",
+            "profile_pic": "www.user3/pic.com",
             "job_role": "Developer",
             "department": "Backend",
             "gender": "Male",

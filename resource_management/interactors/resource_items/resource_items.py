@@ -17,6 +17,7 @@ class GetResourceItemsInteractor:
             item_dtos = self.get_resource_items(item_ids=item_ids)
         except:
             pass
+            return
 
         return item_dtos
 

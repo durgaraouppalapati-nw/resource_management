@@ -1,8 +1,7 @@
 """
-# TODO: Update test case description
+# To get all the resources
 """
-
-from django_swagger_utils.utils.test import CustomAPITestCase
+from resource_management.utils.custom_test_utils import CustomTestUtils
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
@@ -12,7 +11,10 @@ REQUEST_BODY = """
 TEST_CASE = {
     "request": {
         "path_params": {},
-        "query_params": {},
+        "query_params": {
+            "offset": 0,
+            "limit": 10
+        },
         "header_params": {},
         "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["read"], "type": "oauth2"}},
         "body": REQUEST_BODY,
@@ -20,14 +22,17 @@ TEST_CASE = {
 }
 
 
-class TestCase01GetAllResourceAPITestCase(CustomAPITestCase):
+class TestCase01GetAllResourceAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
     url_suffix = URL_SUFFIX
     test_case_dict = TEST_CASE
 
+    def setupUser(self, username, password):
+        self.set_up_user(username, password)
+        self.set_foo_user_as_admin(self.foo_user)
+        self.create_resources(size=4)
+
     def test_case(self):
-        self.default_test_case() # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        self.default_test_case()

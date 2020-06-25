@@ -16,6 +16,7 @@ class GetResourceDetailsInteractor:
             resource_dto = self.get_resource_details(resource_id=resource_id)
         except InvalidResourceId:
             presenter.raise_exception_for_resource_not_found()
+            return
 
         return resource_dto
 

@@ -14,26 +14,3 @@ snapshots['TestCase01SigninAPITestCase::test_case body'] = {
     'res_status': 'INVALID_CREDENTIALS',
     'response': 'Invalid details to login'
 }
-
-snapshots['TestCase01SigninAPITestCase::test_case header_params'] = {
-    'content-language': [
-        'Content-Language',
-        'en'
-    ],
-    'content-length': [
-        '102',
-        'Content-Length'
-    ],
-    'content-type': [
-        'Content-Type',
-        'text/html; charset=utf-8'
-    ],
-    'vary': [
-        'Accept-Language, Origin, Cookie',
-        'Vary'
-    ],
-    'x-frame-options': [
-        'SAMEORIGIN',
-        'X-Frame-Options'
-    ]
-}
