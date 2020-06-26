@@ -7,36 +7,33 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01GetAllResourcesAPITestCase::test_case status'] = 400
+snapshots['TestCase03GetRequestsAPITestCase::test_case status'] = 401
 
-snapshots['TestCase01GetAllResourcesAPITestCase::test_case body'] = {
-    'limit': [
-        'This field is required.'
-    ],
-    'offset': [
-        'This field is required.'
-    ]
+snapshots['TestCase03GetRequestsAPITestCase::test_case body'] = {
+    'http_status_code': 401,
+    'res_status': 'UNAUTHORIZED_USER',
+    'response': 'Unauthorized User'
 }
 
-snapshots['TestCase01GetAllResourcesAPITestCase::test_case header_params'] = {
+snapshots['TestCase03GetRequestsAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'
     ],
     'content-length': [
-        '74',
+        '93',
         'Content-Length'
     ],
     'content-type': [
         'Content-Type',
-        'application/json'
+        'text/html; charset=utf-8'
     ],
     'vary': [
-        'Accept-Language, Origin, Cookie',
+        'Accept-Language, Origin',
         'Vary'
     ],
     'x-frame-options': [
-        'SAMEORIGIN',
+        'DENY',
         'X-Frame-Options'
     ]
 }

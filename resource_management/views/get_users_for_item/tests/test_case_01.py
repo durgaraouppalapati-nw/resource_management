@@ -3,6 +3,8 @@
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
+
+from resource_management.utils.custom_test_utils import CustomTestUtils
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
@@ -11,23 +13,26 @@ REQUEST_BODY = """
 
 TEST_CASE = {
     "request": {
-        "path_params": {"resource_id": "1234", "item_id": "1234"},
-        "query_params": {"offset": 748, "limit": 123},
+        "path_params": {"resource_id": "1", "item_id": "1"},
+        "query_params": {"offset": 0, "limit": 10},
         "header_params": {},
-        "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["superuser"], "type": "oauth2"}},
+        "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["read"], "type": "oauth2"}},
         "body": REQUEST_BODY,
     },
 }
 
 
-class TestCase01GetUsersForItemAPITestCase(CustomAPITestCase):
+class TestCase01GetUsersForItemAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
     url_suffix = URL_SUFFIX
     test_case_dict = TEST_CASE
 
+    def setupUser(self, username, password):
+        self.set_up_user(username, password)
+        self.set_foo_user_as_admin(self.foo_user)
+        self.create_resource_item_access()
+
     def test_case(self):
-        self.default_test_case() # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        self.default_test_case()

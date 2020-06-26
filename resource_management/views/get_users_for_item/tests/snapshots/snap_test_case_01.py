@@ -7,9 +7,31 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01GetUsersForItemAPITestCase::test_case status'] = 403
+snapshots['TestCase01GetUsersForItemAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01GetUsersForItemAPITestCase::test_case body'] = b''
+snapshots['TestCase01GetUsersForItemAPITestCase::test_case body'] = {
+    'total_users': 3,
+    'users': [
+        {
+            'access_level': 'READ',
+            'department': 'Backend',
+            'job_role': 'Developer',
+            'name': 'User 1'
+        },
+        {
+            'access_level': 'READ',
+            'department': 'Backend',
+            'job_role': 'Developer',
+            'name': 'User 2'
+        },
+        {
+            'access_level': 'READ',
+            'department': 'Backend',
+            'job_role': 'Developer',
+            'name': 'User 3'
+        }
+    ]
+}
 
 snapshots['TestCase01GetUsersForItemAPITestCase::test_case header_params'] = {
     'content-language': [
@@ -17,7 +39,7 @@ snapshots['TestCase01GetUsersForItemAPITestCase::test_case header_params'] = {
         'en'
     ],
     'content-length': [
-        '0',
+        '311',
         'Content-Length'
     ],
     'content-type': [
@@ -25,11 +47,11 @@ snapshots['TestCase01GetUsersForItemAPITestCase::test_case header_params'] = {
         'text/html; charset=utf-8'
     ],
     'vary': [
-        'Accept-Language, Origin, Cookie',
+        'Accept-Language, Origin',
         'Vary'
     ],
     'x-frame-options': [
-        'SAMEORIGIN',
+        'DENY',
         'X-Frame-Options'
     ]
 }

@@ -1,9 +1,12 @@
+from datetime import datetime
+from freezegun import freeze_time
 from django_swagger_utils.utils.test import CustomAPITestCase
 
 from resource_management.utils.fixture import (
     UserFactory, ResourceFactory, ResourceItemFactory,
     RequestFactory, ResourceItemAccessFactory
 )
+from resource_management.models import ResourceItem, User
 
 
 class CustomTestUtils(CustomAPITestCase):
@@ -36,11 +39,28 @@ class CustomTestUtils(CustomAPITestCase):
         return resource_items
 
     def create_resource_item_access(self):
-        self.create_users(size=3)
-        self.create_resource_items(size=5)
-        ResourceItemAccessFactory.create_batch(5)
+        users = self.create_users(size=5)
+        resource_items = self.create_resource_items(size=3)
+        ResourceItemAccessFactory.create(resource_item=resource_items[0],
+                                         user=users[1]
+                                         )
+        ResourceItemAccessFactory.create(resource_item=resource_items[0],
+                                         user=users[2]
+                                         )
+        ResourceItemAccessFactory.create(resource_item=resource_items[0],
+                                         user=users[3]
+                                         )
 
     def create_requests(self, size):
         self.create_users(size=3)
         self.create_resource_items(size=3)
-        RequestFactory.create_batch(3)
+        RequestFactory.create_batch(size=size)
+
+    def create_resource_items_for_user(self):
+        self.create_users(size=2)
+        self.create_resource_items(size=3)
+        ResourceItemAccessFactory.create_batch(3, user=User.objects.get(id=2))
+
+    def create_resource_items_for_default_user(self):
+        self.create_resource_items(size=3)
+        ResourceItemAccessFactory.create_batch(3)

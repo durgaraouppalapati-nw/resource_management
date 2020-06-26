@@ -13,16 +13,16 @@ REQUEST_BODY = """
 
 TEST_CASE = {
     "request": {
-        "path_params": {},
-        "query_params": {"offset": 0, "limit": 10, "search": ""},
+        "path_params": {"user_id": "2"},
+        "query_params": {"offset": 0, "limit": 10},
         "header_params": {},
-        "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["write"], "type": "oauth2"}},
+        "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["read"], "type": "oauth2"}},
         "body": REQUEST_BODY,
     },
 }
 
 
-class TestCase01GetAvailableResourceItemsForUserAPITestCase(CustomTestUtils):
+class TestCase02GetAllResourceItemsForUserAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -31,7 +31,6 @@ class TestCase01GetAvailableResourceItemsForUserAPITestCase(CustomTestUtils):
 
     def setupUser(self, username, password):
         self.set_up_user(username, password)
-        self.create_resource_items_for_default_user()
 
     def test_case(self):
         self.default_test_case()

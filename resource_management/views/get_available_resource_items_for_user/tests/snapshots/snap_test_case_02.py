@@ -7,24 +7,10 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01GetAvailableResourceItemsForUserAPITestCase::test_case status'] = 200
+snapshots['TestCase02GetAvailableResourceItemsForUserAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01GetAvailableResourceItemsForUserAPITestCase::test_case body'] = {
+snapshots['TestCase02GetAvailableResourceItemsForUserAPITestCase::test_case body'] = {
     'resource_items': [
-        {
-            'access_level': 'READ',
-            'item_id': 1,
-            'item_title': 'ResourceItem 0',
-            'link': 'www.resource_item0.com',
-            'resource_name': 'Resource 0'
-        },
-        {
-            'access_level': 'READ',
-            'item_id': 2,
-            'item_title': 'ResourceItem 1',
-            'link': 'www.resource_item1.com',
-            'resource_name': 'Resource 0'
-        },
         {
             'access_level': 'READ',
             'item_id': 3,
@@ -33,16 +19,16 @@ snapshots['TestCase01GetAvailableResourceItemsForUserAPITestCase::test_case body
             'resource_name': 'Resource 0'
         }
     ],
-    'total_resource_items': 3
+    'total_resource_items': 1
 }
 
-snapshots['TestCase01GetAvailableResourceItemsForUserAPITestCase::test_case header_params'] = {
+snapshots['TestCase02GetAvailableResourceItemsForUserAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'
     ],
     'content-length': [
-        '458',
+        '184',
         'Content-Length'
     ],
     'content-type': [

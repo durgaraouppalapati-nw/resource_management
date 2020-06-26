@@ -51,6 +51,11 @@ class ResourceItemAccessFactory(factory.django.DjangoModelFactory):
     access_level = "READ"
 
 
+def due_date_time():
+    date_time = datetime.now() + timedelta(days=2)
+    return date_time
+
+
 class RequestFactory(factory.django.DjangoModelFactory):
 
     class Meta:
@@ -60,7 +65,7 @@ class RequestFactory(factory.django.DjangoModelFactory):
     resource = factory.Iterator(Resource.objects.all())
     resource_item = factory.Iterator(ResourceItem.objects.all())
     access_level = 'READ'
-    due_datetime = factory.LazyFunction(datetime.now() + timedelta(days=2))
+    due_datetime = factory.LazyFunction(due_date_time)
     reason_for_access = "Wanted to do the project"
     request_status = "PENDING"
     reason_for_rejection = ""

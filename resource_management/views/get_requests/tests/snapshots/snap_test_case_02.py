@@ -7,9 +7,9 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01GetRequestsAPITestCase::test_case status'] = 200
+snapshots['TestCase02GetRequestsAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01GetRequestsAPITestCase::test_case body'] = {
+snapshots['TestCase02GetRequestsAPITestCase::test_case body'] = {
     'requests_details': [
         {
             'access_level': 'READ',
@@ -42,7 +42,7 @@ snapshots['TestCase01GetRequestsAPITestCase::test_case body'] = {
     'total_requests': 3
 }
 
-snapshots['TestCase01GetRequestsAPITestCase::test_case header_params'] = {
+snapshots['TestCase02GetRequestsAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'
