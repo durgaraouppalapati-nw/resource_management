@@ -1,23 +1,26 @@
 """
-# get all requests
+# TODO: Update test case description
 """
-
-from freezegun import freeze_time
 
 from resource_management.utils.custom_test_utils import CustomTestUtils
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
+from resource_management.models import Request, AccessLevel
+
 REQUEST_BODY = """
 {
-    "filterby": "",
-    "value": ""
+    "action": "REJECTED",
+    "request_ids": [
+        1
+    ],
+    "reason_for_rejection": ""
 }
 """
 
 TEST_CASE = {
     "request": {
         "path_params": {},
-        "query_params": {"offset": 0, "limit": 10, "sortby": "DUE_DATETIME"},
+        "query_params": {},
         "header_params": {},
         "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["read"], "type": "oauth2"}},
         "body": REQUEST_BODY,
@@ -25,7 +28,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01GetRequestsAPITestCase(CustomTestUtils):
+class TestCase02AcceptOrRejectRequestsAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -37,6 +40,12 @@ class TestCase01GetRequestsAPITestCase(CustomTestUtils):
         self.set_foo_user_as_admin(self.foo_user)
         self.create_requests(size=3)
 
-    @freeze_time('2020-06-30 00:00:00')
     def test_case(self):
         self.default_test_case()
+
+        request_id = 1
+        request = Request.objects.get(id=request_id)
+        self.assert_match_snapshot(
+            name='request_status',
+            value=request.request_status
+        )

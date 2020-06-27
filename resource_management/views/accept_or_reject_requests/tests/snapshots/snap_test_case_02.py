@@ -7,11 +7,11 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case status'] = 200
+snapshots['TestCase02AcceptOrRejectRequestsAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case body'] = b''
+snapshots['TestCase02AcceptOrRejectRequestsAPITestCase::test_case body'] = b''
 
-snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case header_params'] = {
+snapshots['TestCase02AcceptOrRejectRequestsAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'
@@ -34,8 +34,4 @@ snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case header_params'
     ]
 }
 
-snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case request_status'] = 'ACCEPTED'
-
-snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case resource_item_access_exists'] = True
-
-snapshots['TestCase01AcceptOrRejectRequestsAPITestCase::test_case access_level'] = 'READ'
+snapshots['TestCase02AcceptOrRejectRequestsAPITestCase::test_case request_status'] = 'REJECTED'
