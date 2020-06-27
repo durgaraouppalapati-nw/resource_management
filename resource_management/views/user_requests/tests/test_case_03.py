@@ -17,7 +17,7 @@ REQUEST_BODY = """
 TEST_CASE = {
     "request": {
         "path_params": {},
-        "query_params": {"offset": 0, "limit": 10, "sortby": ""},
+        "query_params": {"offset": 0, "limit": 10, "sortby": "STATUS"},
         "header_params": {},
         "securities": {"oauth": {"tokenUrl": "http://auth.ibtspl.com/oauth2/", "flow": "password", "scopes": ["write"], "type": "oauth2"}},
         "body": REQUEST_BODY,
@@ -25,7 +25,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01UserRequestsAPITestCase(CustomTestUtils):
+class TestCase03UserRequestsAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD

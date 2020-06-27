@@ -54,7 +54,8 @@ class CustomTestUtils(CustomAPITestCase):
     def create_requests(self, size):
         self.create_users(size=3)
         self.create_resource_items(size=3)
-        RequestFactory.create_batch(size=size)
+        requests = RequestFactory.create_batch(size=size)
+        return requests
 
     def create_resource_items_for_user(self):
         self.create_users(size=2)
@@ -64,3 +65,12 @@ class CustomTestUtils(CustomAPITestCase):
     def create_resource_items_for_default_user(self):
         self.create_resource_items(size=3)
         ResourceItemAccessFactory.create_batch(3)
+
+    def user_requests(self):
+        self.create_resource_items(size=3)
+        requests = RequestFactory.create_batch(size=3)
+        requests[1].request_status = 'ACCEPTED'
+        requests[2].request_status = 'REJECTED'
+        requests[2].reason_for_rejection = "At this time u don't need it"
+        requests[1].save()
+        requests[2].save()

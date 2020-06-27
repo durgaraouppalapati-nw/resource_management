@@ -7,23 +7,23 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01UserRequestsAPITestCase::test_case status'] = 200
+snapshots['TestCase03UserRequestsAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01UserRequestsAPITestCase::test_case body'] = {
+snapshots['TestCase03UserRequestsAPITestCase::test_case body'] = {
     'requests_details': [
-        {
-            'access_level': 'READ',
-            'item_title': 'ResourceItem 0',
-            'request_id': 1,
-            'resource_name': 'Resource 0',
-            'status': 'PENDING'
-        },
         {
             'access_level': 'READ',
             'item_title': 'ResourceItem 1',
             'request_id': 2,
             'resource_name': 'Resource 0',
             'status': 'ACCEPTED'
+        },
+        {
+            'access_level': 'READ',
+            'item_title': 'ResourceItem 0',
+            'request_id': 1,
+            'resource_name': 'Resource 0',
+            'status': 'PENDING'
         },
         {
             'access_level': 'READ',
@@ -36,7 +36,7 @@ snapshots['TestCase01UserRequestsAPITestCase::test_case body'] = {
     'total_requests': 3
 }
 
-snapshots['TestCase01UserRequestsAPITestCase::test_case header_params'] = {
+snapshots['TestCase03UserRequestsAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

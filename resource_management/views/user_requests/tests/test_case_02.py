@@ -9,8 +9,8 @@ from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
 {
-    "filterby": "",
-    "value": ""
+    "filterby": "STATUS",
+    "value": "ACCEPTED"
 }
 """
 
@@ -25,7 +25,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01UserRequestsAPITestCase(CustomTestUtils):
+class TestCase02UserRequestsAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
