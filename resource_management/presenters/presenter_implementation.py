@@ -347,10 +347,13 @@ class PresenterImplementation(PresenterInterface):
             for request_dto in requests_details_dto
         ]
 
-        return {
+        requests_details =  {
             "total_requests": requests_count_dto.requests_count,
             "requests_details": requests_details
         }
+
+        data = json.dumps(requests_details)
+        return HttpResponse(data, status=200)
 
     def _prepare_request_status_dict(self, request_dto):
         request_staus_dict = {

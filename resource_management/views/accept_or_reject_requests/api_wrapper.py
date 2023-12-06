@@ -34,10 +34,10 @@ def api_wrapper(*args, **kwargs):
         presenter=presenter
     )
 
-    interactor.accept_or_reject_requests(
+    response = interactor.accept_or_reject_requests(
         action=action, request_ids=request_ids,
         reason_for_rejection=reason_for_rejection,
         user_id=user_id
     )
 
-    return HttpResponse(status=200)
+    return response

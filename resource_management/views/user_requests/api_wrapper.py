@@ -45,8 +45,9 @@ def api_wrapper(*args, **kwargs):
         presenter=presenter
     )
 
-    requests_details = interactor.get_user_requests(
+    response = interactor.get_user_requests(
         user_id=user_id, requests_parameters_dto=requests_parameters_dto    
     )
-    data = json.dumps(requests_details)
-    return HttpResponse(data, status=200)
+
+    return response
+
